@@ -1,39 +1,52 @@
-import { Text, View } from 'react-native';
+import { Text, View, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { PokemonsCard } from './PokemonsCard';
 
 export function Pokemons() {
 
     const [pokemonData, setPokemonData] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [urlFetch, setUrlFetch] = useState('https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20')
+    const gap = 8
+
+    const fetchPokemonData = async () => {
+    try {
+        const response = await axios.get(urlFetch);
+        const data = response.data;
+        setUrlFetch(data.next)
+        setPokemonData([ ...pokemonData, ...data.results]);
+
+    } catch (error) {
+        console.error('Error fetching Pokemon data:', error);
+    }
+    };
 
     useEffect(() => {
-        const fetchPokemonData = async () => {
-        try {
-            const response = await axios.get('https://pokeapi.co/api/v2/pokemon');
-            const data = response.data;
-            setPokemonData(data.results);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching Pokemon data:', error);
-        }
-        };
+        fetchPokemonData();
+    }, [])
+    
+    const nextPage = (() => {
 
         fetchPokemonData();
-    }, []); // Empty dependency array to run the effect only once on mount
+    })
 
     return (
         <View>
         <Text>Pokemon List</Text>
-        {loading ? (
-          <Text>Loading...</Text>
-        ) : (
           <View>
-            {pokemonData.map((pokemon) => (
-              <Text key={pokemon.name}>{pokemon.name}</Text>
-            ))}
+            {pokemonData &&
+                <FlatList
+                data={pokemonData}
+                numColumns={2}
+                columnWrapperStyle={{gap}}
+                contentContainerStyle={{gap}}
+                keyExtractor={(item) => item.name}
+                renderItem={({ item }) => <PokemonsCard name={item.name} url={item.url} />}
+                onEndReached={nextPage}
+                onEndReachedThreshold={0.5} // Adjust as needed
+              />
+            }
           </View>
-        )}
       </View>
     )
 }
