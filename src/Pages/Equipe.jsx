@@ -1,9 +1,45 @@
-import { Text, View } from 'react-native';
+import React from 'react';
+import { Text, View, FlatList } from 'react-native';
+import useFavorites from '../Utils/UseFavorite';
+import { PokemonsCard } from './PokemonsCard';
+import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 export function Equipe() {
+    const navigation = useNavigation();
+    const { favorites, refreshFavorites  } = useFavorites();
+
+
+    useFocusEffect(
+        React.useCallback(() => {
+            // refreshFavorites() will be called every time this screen comes into focus
+            console.log('Screen focus');
+            refreshFavorites();
+            
+            return () => {
+                console.log('Screen is unfocused');
+            };
+        }, [])
+    );
+
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Equipe</Text>
+        <View>
+            <Text className="text-xl text-black font-bold py-4 pl-2">Liked Pokemon List</Text>
+            <View>
+                {favorites && favorites.length > 0 ? (
+                    <FlatList
+                        data={favorites}
+                        numColumns={2}
+                        columnWrapperStyle={{ gap: 8 }}
+                        contentContainerStyle={{ gap: 8 }}
+                        keyExtractor={(item) => item} // Assuming favorites is an array of Pokemon IDs or something similar
+                        renderItem={({ item }) => <PokemonsCard url={`https://pokeapi.co/api/v2/pokemon/${item}`} navigation={navigation} />}
+                    />
+                ) : (
+                    <Text>No liked Pokemon yet.</Text>
+                )}
+            </View>
         </View>
-    )
+    );
 }

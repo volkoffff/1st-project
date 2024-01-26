@@ -50,9 +50,9 @@ const getBackgroundColor = (type) => {
     }
   };
 
-export function PokemonsCard({name, url, navigation }) {
+export function PokemonsCard({url, navigation }) {
+    console.log(url);
     const [pokemonStat, setPokemonStat] = useState({});
-
     useEffect(() => {
         const fetchpokemonStat = async () => {
         try {
@@ -73,7 +73,7 @@ export function PokemonsCard({name, url, navigation }) {
             <View className={`absolute top-50 rounded-full opacity-40 left-50 w-[65%] h-[65%] bg-slate-300 ${pokemonStat.types && getBackgroundColor(pokemonStat.types[0].type.name)}`}></View>
             <View className={`absolute top-50 rounded-full left-50 w-[40%] h-[40%] bg-slate-300 ${pokemonStat.types && getBackgroundColor(pokemonStat.types[0].type.name)}`}></View>
 
-            <Text className="text-slate-50 absolute bottom-6 text-4xl font-semibold capitalize">{name}</Text>
+            <Text className="text-slate-50 absolute bottom-6 text-4xl font-semibold capitalize">{pokemonStat.name}</Text>
             { pokemonStat.sprites?.front_default ?
                 <View ><Image style={styles.logo} source={{uri: pokemonStat.sprites.front_default}}/></View>
                 :

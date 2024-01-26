@@ -44,7 +44,7 @@ export function Pokemons() {
                 columnWrapperStyle={{gap}}
                 contentContainerStyle={{gap}}
                 keyExtractor={(item) => item.name}
-                renderItem={({ item }) => <PokemonsCard name={item.name} url={item.url} navigation={navigation}/>}
+                renderItem={({ item }) => <PokemonsCard url={item.url} navigation={navigation}/>}
                 onEndReached={nextPage}
                 onEndReachedThreshold={0.5} 
               />

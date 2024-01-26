@@ -3,6 +3,7 @@ import { Text, View, Image, StyleSheet, ScrollView, Button, TouchableOpacity } f
 import { Competences } from '../Components/Competences'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import useFavorites from '../Utils/UseFavorite';
 
 const getBackgroundColor = (type) => {
     switch (type) {
@@ -54,22 +55,39 @@ const getBackgroundColor = (type) => {
 
 export function PokemonDetail({ route }) {
     const { pokemonDetail } = route.params;
+    const pokemonId = pokemonDetail.id;
     const navigation = useNavigation();
+    const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites();
+    const isPokemonFavorite = isFavorite(pokemonId);
+
+    const handleAddToFavorites = () => {
+        addFavorite(pokemonId);
+    };
+
+    const handleRemoveFromFavorites = () => {
+        removeFavorite(pokemonId);
+    };
+
 
     return (
         <>
             <View className=" relative z-[10]">
-            <TouchableOpacity onPress={() => navigation.navigate('app')} className="absolute top-12 left-4 w-14 h-14 bg-white/90 border border-slate-200 rounded-full flex justify-center items-center active:scale-90 ">
+                <View className="w-[100%] absolute py-3 left-0 px-4 flex flex-row justify-between">
+                <TouchableOpacity onPress={() => navigation.navigate('app')} className=" w-14 h-14 bg-white/90 border border-slate-200 rounded-full flex justify-center items-center active:scale-90 ">
                     <Text>
-                        <Ionicons name="chevron-back-outline" style={styles.love}></Ionicons>
+                        <Ionicons name="chevron-back-outline" style={styles.arrowBack}></Ionicons>
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity className="absolute top-12 right-4 love  w-14 h-14 bg-white/90 border border-slate-200 rounded-full flex justify-center items-center active:scale-90 ">
+                <TouchableOpacity onPress={isPokemonFavorite ? handleRemoveFromFavorites : handleAddToFavorites} className="love  w-14 h-14 bg-white/90 border border-slate-200 rounded-full flex justify-center items-center active:scale-90 ">
                     <Text>
-                        <Ionicons name="heart-outline" style={styles.love}></Ionicons>
-                        {/* <Ionicons name="heart" style={styles.loveSelected}></Ionicons> */}
+                        {isPokemonFavorite ? (
+                            <Ionicons name="heart" style={styles.loveSelected}></Ionicons>
+                        ) : (
+                            <Ionicons name="heart" style={styles.love}></Ionicons>
+                        )}
                     </Text>
                 </TouchableOpacity>
+                </View>
             </View>
             <ScrollView>
                 <View className="w-[100%] aspect-square relative" style={styles.flexCenter}>
@@ -129,8 +147,8 @@ export function PokemonDetail({ route }) {
                         <View className="flex flex-row">
                             {pokemonDetail.forms.map((item, index) => {
                                 return (
-                                    <View key={index} className="flex flex-col items-center">
-                                        <Image className="w-[25%] aspect-square" source={{ uri: pokemonDetail.sprites.front_default }} />
+                                    <View key={index} className="flex flex-col items-center w-[25%] ">
+                                        <Image className="w-[100%] aspect-square" source={{ uri: pokemonDetail.sprites.front_default }} />
                                         <Text className="text-lg font-normal text-slate-500">{item.name}</Text>
                                     </View>
                                 )
@@ -158,9 +176,14 @@ const styles = StyleSheet.create({
         width: 330,
         height: 330,
     },
+    arrowBack: {
+        fontSize: 30,
+        marginTop: 4,
+    },
     love: {
         fontSize: 30,
         marginTop: 4,
+        color: 'lightgray',
     },
     loveSelected: {
         marginTop: 4,
