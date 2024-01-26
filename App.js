@@ -68,7 +68,6 @@ function MyTabs() {
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="Équipe" component={EquipeScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
-      {/* <Tab.Screen name="PokemonDetail" component={PokemonDetail} /> */}
 
     </Tab.Navigator>
   );
@@ -78,7 +77,7 @@ const MainNavigator = () => {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator headerMode="none">
-      <Stack.Screen name="Home" component={MyTabs} />
+      <Stack.Screen name="app" component={MyTabs} />
       <Stack.Screen name="PokemonDetail" component={PokemonDetail} />
     </Stack.Navigator>
   );

@@ -67,7 +67,7 @@ export function PokemonsCard({name, url, navigation }) {
     }, []); 
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('PokemonDetail', { pokemonStat: pokemonStat })} className="w-[50%] aspect-square flex items-center justify-center relative rounded">
+        <TouchableOpacity onPress={() => navigation.navigate('PokemonDetail', { pokemonDetail: pokemonStat })} className="w-[50%] aspect-square flex items-center justify-center relative rounded">
 
             <View className={`absolute top-50 opacity-60 left-50 w-[100%] h-[100%] bg-slate-300 rounded ${pokemonStat.types && getBackgroundColor(pokemonStat.types[0].type.name)}`}></View>
             <View className={`absolute top-50 rounded-full opacity-40 left-50 w-[65%] h-[65%] bg-slate-300 ${pokemonStat.types && getBackgroundColor(pokemonStat.types[0].type.name)}`}></View>
