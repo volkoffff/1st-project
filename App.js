@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -86,7 +86,19 @@ const MainNavigator = () => {
 export default function App() {
   return (
     <NavigationContainer>
+          <SafeAreaView style={styles.container}>
       <MainNavigator />
+          </SafeAreaView>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  text: {
+    fontSize: 25,
+    fontWeight: '500',
+  },
+});
