@@ -76,7 +76,10 @@ function MyTabs() {
 const MainNavigator = () => {
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator headerMode="none">
+    <Stack.Navigator screenOptions={({ route }) => ({
+      headerShown:false
+    })}
+      >
       <Stack.Screen name="app" component={MyTabs} />
       <Stack.Screen name="PokemonDetail" component={PokemonDetail} />
     </Stack.Navigator>
@@ -87,7 +90,7 @@ export default function App() {
   return (
     <NavigationContainer>
           <SafeAreaView style={styles.container}>
-      <MainNavigator />
+            <MainNavigator />
           </SafeAreaView>
     </NavigationContainer>
   );
