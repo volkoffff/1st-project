@@ -2,9 +2,12 @@ import { Text, View, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PokemonsCard } from './PokemonsCard';
+import { useNavigation } from '@react-navigation/native';
+
 
 export function Pokemons() {
 
+    const navigation = useNavigation();
     const [pokemonData, setPokemonData] = useState([]);
     const [urlFetch, setUrlFetch] = useState('https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20')
     const gap = 8
@@ -32,7 +35,7 @@ export function Pokemons() {
 
     return (
         <View>
-        <Text>Pokemon List</Text>
+        <Text className="text-xl text-black font-bold py-4 pl-2">Pokemon List</Text>
           <View>
             {pokemonData &&
                 <FlatList
@@ -41,9 +44,9 @@ export function Pokemons() {
                 columnWrapperStyle={{gap}}
                 contentContainerStyle={{gap}}
                 keyExtractor={(item) => item.name}
-                renderItem={({ item }) => <PokemonsCard name={item.name} url={item.url} />}
+                renderItem={({ item }) => <PokemonsCard name={item.name} url={item.url} navigation={navigation}/>}
                 onEndReached={nextPage}
-                onEndReachedThreshold={0.5} // Adjust as needed
+                onEndReachedThreshold={0.5} 
               />
             }
           </View>

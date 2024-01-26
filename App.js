@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,6 +8,8 @@ import { Pokemons } from './src/Pages/Pokemons';
 import { Settings } from './src/Pages/Settings';
 import { Search } from './src/Pages/Search';
 import { Equipe } from './src/Pages/Equipe';
+import {PokemonDetail} from './src/Pages/PokemonDetail';
+
 
 function PokemonsScreen() {
   return (
@@ -38,6 +41,7 @@ function MyTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerShown:false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
@@ -64,14 +68,26 @@ function MyTabs() {
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="Équipe" component={EquipeScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
+      {/* <Tab.Screen name="PokemonDetail" component={PokemonDetail} /> */}
+
     </Tab.Navigator>
   );
 }
 
+const MainNavigator = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="Home" component={MyTabs} />
+      <Stack.Screen name="PokemonDetail" component={PokemonDetail} />
+    </Stack.Navigator>
+  );
+};
+
 export default function App() {
   return (
     <NavigationContainer>
-      <MyTabs />
+      <MainNavigator />
     </NavigationContainer>
   );
 }
