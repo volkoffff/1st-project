@@ -34,7 +34,7 @@ export function Pokemons() {
     })
 
     return (
-        <View>
+        <View className="px-2">
             {pokemonData &&
                 <FlatList
                 data={pokemonData}

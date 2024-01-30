@@ -25,8 +25,7 @@ export function Equipe() {
 
     return (
         <View>
-            <Text className="text-xl text-black font-bold py-4 pl-2">Liked Pokemon List</Text>
-            <View>
+            <View className="px-2 min-h-full">
                 {favorites && favorites.length > 0 ? (
                     <FlatList
                         data={favorites}
