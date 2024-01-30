@@ -72,7 +72,7 @@ export function PokemonDetail({ route }) {
     return (
         <>
             <View className=" relative z-[10]">
-                <View className="w-[100%] absolute py-3 left-0 px-4 flex flex-row justify-between">
+                <View className="w-[100%] absolute py-3 top-2 left-0 px-4 flex flex-row justify-between">
                 <TouchableOpacity onPress={() => navigation.navigate('app')} className=" w-14 h-14 bg-white/90 border border-slate-200 rounded-full flex justify-center items-center active:scale-90 ">
                     <Text>
                         <Ionicons name="chevron-back-outline" style={styles.arrowBack}></Ionicons>

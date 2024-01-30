@@ -1,8 +1,8 @@
-import { Text, View, FlatList } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { PokemonsCard } from './PokemonsCard';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
+import { PokemonsCard } from './PokemonsCard';
 
 
 export function Pokemons() {
@@ -35,8 +35,6 @@ export function Pokemons() {
 
     return (
         <View>
-        <Text className="text-xl text-black font-bold py-4 pl-2">Pokemon List</Text>
-          <View>
             {pokemonData &&
                 <FlatList
                 data={pokemonData}
@@ -47,9 +45,8 @@ export function Pokemons() {
                 renderItem={({ item }) => <PokemonsCard url={item.url} navigation={navigation}/>}
                 onEndReached={nextPage}
                 onEndReachedThreshold={0.5} 
-              />
+                />
             }
-          </View>
-      </View>
+        </View>
     )
 }
