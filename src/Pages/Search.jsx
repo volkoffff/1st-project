@@ -1,10 +1,103 @@
-import { Text, View } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { ScrollView, View, FlatList } from "react-native";
+import { SearchBar } from "react-native-elements";
+import { PokemonsCard } from "./PokemonsCard";
 
 export function Search() {
+  const [search, setSearch] = useState("");
+  const navigation = useNavigation();
+  const gap = 8;
 
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>page de recherche</Text>
+  const updateSearch = (search) => {
+    setSearch(search);
+  };
+
+  const [pokemonData, setPokemonData] = useState([]);
+  const [filteredPokemonData, setFilteredPokemonData] = useState([]); // [
+  const [urlFetch, setUrlFetch] = useState(
+    "https://pokeapi.co/api/v2/pokemon/?limit=1302"
+  );
+
+  const fetchPokemonData = async () => {
+    try {
+      const response = await axios.get(urlFetch);
+      const data = response.data;
+      setPokemonData(data.results);
+      console.log(data.results);
+    } catch (error) {
+      console.error("Error fetching Pokemon data:", error);
+    }
+  };
+
+  const filterPokemonData = () => {
+    const filteredData = pokemonData.filter((item) =>
+      item.name.includes(search.toLowerCase())
+    );
+    setFilteredPokemonData(filteredData);
+
+
+  };
+  
+  
+  useEffect(() => {
+    filterPokemonData();
+    
+    if (search === "") {
+      fetchPokemonData();
+    }
+  }, [search]);
+
+  return (
+    <View className="flex">
+      <SearchBar
+        placeholder="Type Here..."
+        containerStyle={{
+          backgroundColor: "transparent",
+          borderWidth: 0,
+          borderBottomColor: "transparent",
+          borderTopColor: "transparent",
+          width: "100%",
+        }}
+        inputContainerStyle={{
+          backgroundColor: "#E5E5E5",
+          borderRadius: 10,
+          height: 40,
+        }}
+        value={search}
+        onChangeText={updateSearch}
+      />
+
+      {search === "" ? (
+        <ScrollView className="w-full min-h-full grow-1 px-2">
+          <View className="w-full flex flex-row mx-auto">
+            <View className="h-[180] flex-1 bg-blue-100 rounded-lg"></View>
+            <View className="h-[180] flex-1 bg-blue-100 rounded-lg ml-2 "></View>
+          </View>
+          <View className="w-full h-[180] bg-green-200 rounded-lg mt-2"></View>
+          <View className="w-full flex flex-row mx-auto mt-2">
+            <View className="h-[180] flex-1 bg-orange-300 rounded-lg"></View>
+            <View className="h-[180] flex-1 bg-orange-300 rounded-lg ml-2 "></View>
+          </View>
+          <View className="w-full h-[180] bg-red-200 rounded-lg mt-2"></View>
+        </ScrollView>
+      ) : (
+        <View className="px-2">
+          {filteredPokemonData && (
+            <FlatList
+              data={filteredPokemonData}
+              numColumns={2}
+              columnWrapperStyle={{ gap }}
+              contentContainerStyle={{ gap }}
+              keyExtractor={(item) => item.name}
+              renderItem={({ item }) => (
+                <PokemonsCard url={item.url} navigation={navigation} />
+              )}
+            />
+          )}
         </View>
-    )
+      )}
+    </View>
+  );
 }
