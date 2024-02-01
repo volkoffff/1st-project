@@ -51,18 +51,18 @@ const getBackgroundColor = (type) => {
   };
 
 export function PokemonsCard({url, navigation }) {
-    console.log(url);
     const [pokemonStat, setPokemonStat] = useState({});
+    
+    const fetchpokemonStat = async () => {
+      try {
+        const response = await axios.get(`${url}`);
+        setPokemonStat(response.data);
+      } catch (error) {
+        console.error('Error fetching Pokemon stat data:', error);
+      }
+    };
+    
     useEffect(() => {
-        const fetchpokemonStat = async () => {
-        try {
-            const response = await axios.get(`${url}`);
-            setPokemonStat(response.data);
-        } catch (error) {
-            console.error('Error fetching Pokemon stat data:', error);
-        }
-        };
-
         fetchpokemonStat();
     }, []); 
 

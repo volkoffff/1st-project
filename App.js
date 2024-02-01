@@ -9,6 +9,7 @@ import { Settings } from './src/Pages/Settings';
 import { Search } from './src/Pages/Search';
 import { Equipe } from './src/Pages/Equipe';
 import {PokemonDetail} from './src/Pages/PokemonDetail';
+import { SearchCategorie } from './src/Pages/SearchCategorie';
 
 
 function PokemonsScreen() {
@@ -82,6 +83,7 @@ const MainNavigator = () => {
       >
       <Stack.Screen name="app" component={MyTabs} />
       <Stack.Screen name="PokemonDetail" component={PokemonDetail} />
+      <Stack.Screen name="SearchCategorie" component={SearchCategorie} />
     </Stack.Navigator>
   );
 };
