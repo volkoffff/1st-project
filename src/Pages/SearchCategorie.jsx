@@ -9,7 +9,7 @@ export function SearchCategorie({ route }) {
   const { urlFetch } = route.params;
   const navigation = useNavigation();
   const [pokemonData, setPokemonData] = useState([]);
-  const [visiblePokemonCount, setVisiblePokemonCount] = useState(20);
+  const [visiblePokemonCount, setVisiblePokemonCount] = useState(15);
   const gap = 8;
 
   const fetchPokemonData = async () => {
@@ -27,7 +27,7 @@ export function SearchCategorie({ route }) {
   }, []);
 
   const loadMorePokemon = () => {
-    setVisiblePokemonCount(visiblePokemonCount + 20);
+    setVisiblePokemonCount(visiblePokemonCount + 15);
   };
 
   return (

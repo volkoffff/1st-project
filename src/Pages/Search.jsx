@@ -9,6 +9,7 @@ export function Search() {
   const [search, setSearch] = useState("");
   const [firstRender, setFirstRender] = useState(false);
   const navigation = useNavigation();
+  const [visiblePokemonCount, setVisiblePokemonCount] = useState(15);
   const gap = 8;
 
   const updateSearch = (search) => {
@@ -50,6 +51,10 @@ export function Search() {
     }
   }, [search]);
 
+  const loadMorePokemon = () => {
+    setVisiblePokemonCount(visiblePokemonCount + 15);
+  };
+
   return (
     <View className="flex">
       <SearchBar
@@ -87,7 +92,7 @@ export function Search() {
         <View className="px-2">
           {filteredPokemonData && (
             <FlatList
-              data={filteredPokemonData}
+              data={filteredPokemonData.slice(0, visiblePokemonCount)}
               numColumns={2}
               columnWrapperStyle={{ gap }}
               contentContainerStyle={{ gap }}
@@ -95,6 +100,8 @@ export function Search() {
               renderItem={({ item }) => (
                 <PokemonsCard url={item.url} navigation={navigation} />
               )}
+              onEndReached={loadMorePokemon}
+              onEndReachedThreshold={0.5} 
             />
           )}
         </View>
