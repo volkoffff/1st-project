@@ -10,7 +10,9 @@ import { Search } from './src/Pages/Search';
 import { Equipe } from './src/Pages/Equipe';
 import {PokemonDetail} from './src/Pages/PokemonDetail';
 import { SearchCategorie } from './src/Pages/SearchCategorie';
+import { LogBox } from 'react-native';
 
+LogBox.ignoreLogs(['Sending...']);
 
 function PokemonsScreen() {
   return (
@@ -76,9 +78,9 @@ function MyTabs() {
 
 const MainNavigator = () => {
   const Stack = createStackNavigator();
-  return (
+    return (
     <Stack.Navigator screenOptions={({ route }) => ({
-      headerShown:false
+      headerShown:false,
     })}
       >
       <Stack.Screen name="app" component={MyTabs} />
