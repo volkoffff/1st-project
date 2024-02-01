@@ -1,8 +1,8 @@
-import React from 'react';
-import { Text, View, Image, StyleSheet, ScrollView, Button, TouchableOpacity } from 'react-native';
-import { Competences } from '../Components/Competences'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Competences } from '../Components/Competences';
 import useFavorites from '../Utils/UseFavorite';
 
 const getBackgroundColor = (type) => {
@@ -94,7 +94,10 @@ export function PokemonDetail({ route }) {
                     <View className={`absolute top-0 h-[100%] w-[100%] opacity-60 ${pokemonDetail.types && getBackgroundColor(pokemonDetail.types[0].type.name)}`}></View>
                     <View className={`absolute top-[15%] rounded-full left-[12%] w-[75%] aspect-square bg-slate-300 opacity-40 ${pokemonDetail.types && getBackgroundColor(pokemonDetail.types[0].type.name)}`}></View>
                     <View className={`absolute top-[30%] rounded-full left-[29%] w-[40%] aspect-square bg-slate-300 ${pokemonDetail.types && getBackgroundColor(pokemonDetail.types[0].type.name)}`}></View>
-                    <Image style={styles.logo} source={{ uri: pokemonDetail.sprites.front_default }} />
+                    { pokemonDetail.sprites
+                    ? <Image style={styles.logo} source={{ uri: pokemonDetail.sprites.front_default }} />
+                    : <Image style={styles.logo} source={require('../../assets/noimage.png')} />
+                    }
                 </View>
                 <View className="w-[100%] py-4 px-4 flex gap-y-6">
                     <View>

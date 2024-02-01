@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, View, FlatList, TouchableOpacity } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { PokemonsCard } from "./PokemonsCard";
+import { SearchCategorieList } from "../Components/SearchCategorieList";
 
 export function Search() {
   const [search, setSearch] = useState("");
@@ -76,18 +77,7 @@ export function Search() {
       />
 
       {search === "" ? (
-        <ScrollView className="w-full min-h-full grow-1 px-2">
-          <View className="w-full flex flex-row mx-auto">
-            <TouchableOpacity onPress={() => navigation.navigate('SearchCategorie', {urlFetch: "https://pokeapi.co/api/v2/type/10"})} className="h-[180] flex-1 bg-red-400 rounded-lg"></TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('SearchCategorie', {urlFetch: "https://pokeapi.co/api/v2/type/4"})} className="h-[180] flex-1 bg-green-200 rounded-lg ml-2"></TouchableOpacity>
-          </View>
-          <View className="w-full h-[180] bg-green-200 rounded-lg mt-2"></View>
-          <View className="w-full flex flex-row mx-auto mt-2">
-            <View className="h-[180] flex-1 bg-orange-300 rounded-lg"></View>
-            <View className="h-[180] flex-1 bg-orange-300 rounded-lg ml-2 "></View>
-          </View>
-          <View className="w-full h-[180] bg-red-200 rounded-lg mt-2"></View>
-        </ScrollView>
+        <SearchCategorieList />
       ) : (
         <View className="px-2">
           {filteredPokemonData && (
