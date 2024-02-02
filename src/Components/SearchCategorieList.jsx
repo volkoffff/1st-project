@@ -9,6 +9,54 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import FastImage from "react-native-fast-image";
+
+const getBackgroundImage = (type) => {
+  switch (type) {
+    case "normal":
+      return "Type_normal.png";
+    case "fighting":
+      return "Type_fighting.png";
+    case "flying":
+      return "Type_flying.png";
+    case "poison":
+      return "Type_poison.png";
+    case "ground":
+      return "Type_ground.png";
+    case "rock":
+      return "Type_rock.png";
+    case "bug":
+      return "Type_bug.png";
+    case "ghost":
+      return "Type_ghost.png";
+    case "steel":
+      return "Type_steel.png";
+    case "fire":
+      return "Type_fire.png";
+    case "water":
+      return "Type_water.png";
+    case "grass":
+      return "Type_grass.png";
+    case "electric":
+      return "Type_electric.png";
+    case "psychic":
+      return "Type_psychic.png";
+    case "ice":
+      return "Type_ice.png";
+    case "dragon":
+      return "Type_dragon.png";
+    case "dark":
+      return "Type_dark.png";
+    case "fairy":
+      return "Type_fairy.png";
+    case "unknown":
+      return "Type_unknown.png";
+    case "shadow":
+      return "Type_shadow.png";
+    default:
+      return "Type_shadow.png";
+  }
+};
 
 const getBackgroundColor = (type) => {
   switch (type) {
@@ -57,53 +105,6 @@ const getBackgroundColor = (type) => {
   }
 };
 
-const getBackgroundImage = (type) => {
-  switch (type) {
-    case "normal":
-      return "Type_normal.png";
-    case "fighting":
-      return "Type_fighting.png";
-    case "flying":
-      return "Type_flying.png";
-    case "poison":
-      return "Type_poison.png";
-    case "ground":
-      return "Type_ground.png";
-    case "rock":
-      return "Type_rock.png";
-    case "bug":
-      return "Type_bug.png";
-    case "ghost":
-      return "Type_ghost.png";
-    case "steel":
-      return "Type_steel.png";
-    case "fire":
-      return "Type_fire.png";
-    case "water":
-      return "Type_water.png";
-    case "grass":
-      return "Type_grass.png";
-    case "electric":
-      return "Type_electric.png";
-    case "psychic":
-      return "Type_psychic.png";
-    case "ice":
-      return "Type_ice.png";
-    case "dragon":
-      return "Type_dragon.png";
-    case "dark":
-      return "Type_dark.png";
-    case "fairy":
-      return "Type_fairy.png";
-    case "unknown":
-      return "Type_unknown.png";
-    case "shadow":
-      return "Type_shadow.png";
-    default:
-      return "bg-slate-200";
-  }
-};
-
 export function SearchCategorieList() {
   const navigation = useNavigation();
 
@@ -123,8 +124,35 @@ export function SearchCategorieList() {
     fetchTypeData();
   }, []);
 
+  const images = {
+    normal: require('../../assets/types/Type_normal.png'),
+    fighting: require('../../assets/types/Type_fighting.png'),
+    flying: require('../../assets/types/Type_flying.png'),
+    poison: require('../../assets/types/Type_poison.png'),
+    ground: require('../../assets/types/Type_ground.png'),
+    rock: require('../../assets/types/Type_rock.png'),
+    bug: require('../../assets/types/Type_bug.png'),
+    ghost: require('../../assets/types/Type_shadow.png'),
+    shadow: require('../../assets/types/Type_shadow.png'),
+    steel: require('../../assets/types/Type_steel.png'),
+    fire: require('../../assets/types/Type_fire.png'),
+    water: require('../../assets/types/Type_water.png'),
+    grass: require('../../assets/types/Type_grass.png'),
+    electric: require('../../assets/types/Type_electric.png'),
+    psychic: require('../../assets/types/Type_psychic.png'),
+    ice: require('../../assets/types/Type_ice.png'),
+    dragon: require('../../assets/types/Type_dragon.png'),
+    dark: require('../../assets/types/Type_dark.png'),
+    fairy: require('../../assets/types/Type_fairy.png'),
+    shadow: require('../../assets/types/Type_shadow.png'),
+    unknown: require('../../assets/types/Type_normal.png'),
+  };
+
+  // const imagePath = getBackgroundImage('normal');
+  // console.log(imagePath);
+
   return (
-    <ScrollView className="w-full min-h-full grow-1 px-2">
+    <ScrollView className="w-full grow-1 px-2 mb-[62]">
       <View className="flex flex-row flex-wrap mx-auto gap-2">
         {typeData.map((item, index) => (
           <TouchableOpacity
@@ -133,10 +161,11 @@ export function SearchCategorieList() {
                 urlFetch: item.url,
               })
             }
-            className={`h-[180] min-w-[40%] flex-1 rounded-lg ${
-              index % 4 === 0 && "min-w-[98%]"
+            className={`h-[180] min-w-[40%] flex-1 rounded-lg  ${
+              index % 3 === 0 && "min-w-[98%]"
             }`}
             key={index}
+            style={{ overflow: 'hidden' }}
           >
             <View
               className={`absolute top-50 opacity-60 left-50 w-[100%] h-[100%] bg-slate-300 rounded-lg ${getBackgroundColor(
@@ -144,23 +173,23 @@ export function SearchCategorieList() {
               )}`}
             ></View>
             <View
-              className={`absolute top-50 rounded-full opacity-40 left-50 w-[65%] h-[65%] bg-slate-300 ${getBackgroundColor(
+              className={`absolute top-50 rounded-full opacity-40 left-[10%] top-[7%] w-[80%] aspect-square bg-slate-300 ${getBackgroundColor(
                 item.name
-              )}`}
+              )} ${index % 3 === 0 && "top-[-30%]"}`}
             ></View>
             <View
-              className={`absolute top-50 rounded-full left-50 w-[40%] h-[40%] bg-slate-300 ${getBackgroundColor(
+              className={`absolute top-50 rounded-full w-[120] left-[19%] top-[17%] aspect-square bg-slate-300 ${getBackgroundColor(
                 item.name
-              )}`}
+              )} ${index % 3 === 0 && "left-[34.9%]"}`}
             ></View>
-            <View className="w-full flex mx-auto">
+            <View className="w-full h-full flex items-center justify-center">
               <View>
                 <Image
-                  style={styles.logo}
-                  source={require('../../assets/types/'+getBackgroundImage(item.name))}
+                  style={styles.imgType}
+                  source={images[item.name]}
                 />
               </View>
-              <Text className="text-slate-50 text-4xl font-semibold capitalize">
+              <Text className="text-slate-50 absolute text-4xl font-semibold capitalize bottom-[15]">
                 {item.name}
               </Text>
             </View>
@@ -172,8 +201,8 @@ export function SearchCategorieList() {
 }
 
 const styles = StyleSheet.create({
-  logo: {
-    width: 150,
-    height: 150,
+  imgType: {
+    width: 110,
+    height: 110,
   },
 });
