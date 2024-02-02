@@ -25,6 +25,7 @@ export function Equipe() {
 
     return (
         <View>
+            <Text className="mx-auto py-2 text-xl font-medium">Equipe {favorites.length} / 6</Text>
             <View className="px-2 min-h-full">
                 {favorites && favorites.length > 0 ? (
                     <FlatList
@@ -36,7 +37,7 @@ export function Equipe() {
                         renderItem={({ item }) => <PokemonsCard url={`https://pokeapi.co/api/v2/pokemon/${item}`} navigation={navigation} />}
                     />
                 ) : (
-                    <Text>No liked Pokemon yet.</Text>
+                    <Text>Pas encore de Pokemon dans votre équipe.</Text>
                 )}
             </View>
         </View>

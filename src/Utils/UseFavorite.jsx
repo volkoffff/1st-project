@@ -1,22 +1,29 @@
 // useFavorites.js
-import { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const useFavorites = () => {
   const [favorites, setFavorites] = useState([]);
 
   const updateFavoritesInStorage = async (updatedFavorites) => {
     try {
-      await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      await AsyncStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     } catch (error) {
-      console.error('Error updating favorites in storage:', error);
+      console.error("Error updating favorites in storage:", error);
     }
   };
 
   const addFavorite = async (pokemonId) => {
     const updatedFavorites = [...favorites, pokemonId];
+
+    if (updatedFavorites.length > 6) {
+      return "Vous avez déjà 6 favoris";
+    }
+  
     await updateFavoritesInStorage(updatedFavorites);
     setFavorites(updatedFavorites);
+    
+    return "Ajouté aux favoris";
   };
 
   const removeFavorite = async (pokemonId) => {
@@ -29,12 +36,12 @@ const useFavorites = () => {
 
   const refreshFavorites = async () => {
     try {
-      const storedFavorites = await AsyncStorage.getItem('favorites');
+      const storedFavorites = await AsyncStorage.getItem("favorites");
       if (storedFavorites) {
         setFavorites(JSON.parse(storedFavorites));
       }
     } catch (error) {
-      console.error('Error refreshing favorites:', error);
+      console.error("Error refreshing favorites:", error);
     }
   };
 
@@ -42,7 +49,13 @@ const useFavorites = () => {
     refreshFavorites();
   }, []); // Only run this effect on component mount
 
-  return { favorites, addFavorite, removeFavorite, isFavorite, refreshFavorites };
+  return {
+    favorites,
+    addFavorite,
+    removeFavorite,
+    isFavorite,
+    refreshFavorites,
+  };
 };
 
 export default useFavorites;

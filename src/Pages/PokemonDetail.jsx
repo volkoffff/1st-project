@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, Animated } from 'react-native';
 import { Competences } from '../Components/Competences';
 import useFavorites from '../Utils/UseFavorite';
 
@@ -84,13 +84,19 @@ export function PokemonDetail({ route }) {
     const isPokemonFavorite = isFavorite(pokemonId);
 
     const handleAddToFavorites = () => {
-        addFavorite(pokemonId);
+        addFavorite(pokemonId)
+
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((error) => {
+            console.error("Error adding to favorites:", error);
+        });
     };
 
     const handleRemoveFromFavorites = () => {
         removeFavorite(pokemonId);
     };
-
 
     return (
         <>
@@ -107,7 +113,7 @@ export function PokemonDetail({ route }) {
                             <Ionicons name="heart" style={styles.loveSelected}></Ionicons>
                         ) : (
                             <Ionicons name="heart" style={styles.love}></Ionicons>
-                        )}
+                            )}
                     </Text>
                 </TouchableOpacity>
                 </View>
