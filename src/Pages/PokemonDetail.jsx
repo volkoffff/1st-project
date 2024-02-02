@@ -52,6 +52,29 @@ const getBackgroundColor = (type) => {
     }
 };
 
+const images = {
+    normal: require('../../assets/types/Type_normal.png'),
+    fighting: require('../../assets/types/Type_fighting.png'),
+    flying: require('../../assets/types/Type_flying.png'),
+    poison: require('../../assets/types/Type_poison.png'),
+    ground: require('../../assets/types/Type_ground.png'),
+    rock: require('../../assets/types/Type_rock.png'),
+    bug: require('../../assets/types/Type_bug.png'),
+    ghost: require('../../assets/types/Type_shadow.png'),
+    shadow: require('../../assets/types/Type_shadow.png'),
+    steel: require('../../assets/types/Type_steel.png'),
+    fire: require('../../assets/types/Type_fire.png'),
+    water: require('../../assets/types/Type_water.png'),
+    grass: require('../../assets/types/Type_grass.png'),
+    electric: require('../../assets/types/Type_electric.png'),
+    psychic: require('../../assets/types/Type_psychic.png'),
+    ice: require('../../assets/types/Type_ice.png'),
+    dragon: require('../../assets/types/Type_dragon.png'),
+    dark: require('../../assets/types/Type_dark.png'),
+    fairy: require('../../assets/types/Type_fairy.png'),
+    shadow: require('../../assets/types/Type_shadow.png'),
+    unknown: require('../../assets/types/Type_normal.png'),
+  };
 
 export function PokemonDetail({ route }) {
     const { pokemonDetail } = route.params;
@@ -106,7 +129,18 @@ export function PokemonDetail({ route }) {
                             <View className="flex gap-2 flex-row">
                                 {pokemonDetail.types.map((item, index) => {
                                     return (
-                                        <View key={index} className={`text-slate-100 px-3 h-[23] rounded-full flex justify-center ${pokemonDetail.types && getBackgroundColor(item.type.name)}`}><Text className="text-slate-100">{item.type.name}</Text></View>
+                                        <TouchableOpacity onPress={() =>
+                                            navigation.navigate("SearchCategorie", {
+                                              urlFetch: item.type.url,
+                                            })
+                                          }
+                                          key={index} className={`text-slate-100 px-2 h-[23] rounded-full flex flex-row justify-center items-center ${pokemonDetail.types && getBackgroundColor(item.type.name)}`}>
+                                                <Image
+                                                    style={styles.imgType}
+                                                    source={images[item.type.name]}
+                                                />
+                                                <Text className="text-slate-100 ml-[4]">{item.type.name}</Text>
+                                        </TouchableOpacity>
                                     )
                                 })}
                             </View>
@@ -178,6 +212,10 @@ const styles = StyleSheet.create({
     logo: {
         width: 330,
         height: 330,
+    },
+    imgType: {
+        width: 15,
+        height: 15,
     },
     arrowBack: {
         fontSize: 30,
