@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, FlatList, TouchableOpacity } from "react-native";
+import { ScrollView, View, FlatList, TouchableOpacity, Text, Image, StyleSheet } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { PokemonsCard } from "./PokemonsCard";
 import { SearchCategorieList } from "../Components/SearchCategorieList";
@@ -80,7 +80,7 @@ export function Search() {
         <SearchCategorieList />
       ) : (
         <View className="px-2">
-          {filteredPokemonData && (
+          {filteredPokemonData && filteredPokemonData.length > 0 ?  (
             <FlatList
               data={filteredPokemonData.slice(0, visiblePokemonCount)}
               numColumns={2}
@@ -93,9 +93,21 @@ export function Search() {
               onEndReached={loadMorePokemon}
               onEndReachedThreshold={0.5} 
             />
-          )}
+          ) :
+          <View className="mx-auto">
+            <View ><Image style={styles.logo} source={require('../../assets/pikachu_sad.png')}/></View>
+            <Text className="text-gray-700">Pas de Pokemon trouvé...</Text>
+          </View>  
+          }
         </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  logo: {
+    width: 150,
+    height: 150,
+  },
+});
