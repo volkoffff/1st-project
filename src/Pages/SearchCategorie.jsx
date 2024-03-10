@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { PokemonsCard } from "./PokemonsCard";
-import { FlatList } from "react-native-gesture-handler";
 
 export function SearchCategorie({ route }) {
   const { urlFetch } = route.params;
