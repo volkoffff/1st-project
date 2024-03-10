@@ -20,7 +20,7 @@ export function Competences({ url }) {
 
     return (
         <View className="py-1.5">
-            <Text className="text-base font-medium text-slate-700">
+            <Text className="text-base font-medium text-slate-800">
                 {pokemonCompetences.name}
             </Text>
             <Text>

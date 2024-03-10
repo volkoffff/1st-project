@@ -93,9 +93,9 @@ export function PokemonDetail({ route }) {
   const isPokemonFavorite = isFavorite(pokemonId);
 
   const handleAddToFavorites = () => {
-      addFavorite(pokemonId)
+    addFavorite(pokemonId)
       .then((result) => {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
         console.log(result);
       })
       .catch((error) => {
@@ -104,9 +104,7 @@ export function PokemonDetail({ route }) {
   };
 
   const handleRemoveFromFavorites = () => {
-    Haptics.notificationAsync(
-        Haptics.NotificationFeedbackType.Error
-      )
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     removeFavorite(pokemonId);
   };
 
@@ -293,7 +291,7 @@ export function PokemonDetail({ route }) {
 
           <View>
             <Text className="text-xl font-medium text-slate-800">Attaques</Text>
-            {pokemonDetail.moves.map((item, index) => {
+            {pokemonDetail.moves.slice(0, 8).map((item, index) => {
               return (
                 <Text
                   key={index}
